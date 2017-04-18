@@ -32,7 +32,22 @@
             }
             if (el.needsRedraw && el.image !== undefined){
                 var start = new Date();
-                el.image.render(el, el.invalid);
+                
+                var render = el.image.render;
+
+                el.image.stats = {
+                    lastGetPixelDataTime:-1.0,
+                    laststoredPixelDataToCanvasImageDataTime:-1.0,
+                    lastPutImageDataTime:-1.0,
+                    lastRenderTime:-1.0,
+                    lastLutGenerateTime:-1.0,
+                };
+
+                if(!render) {
+                    render = el.image.color ? cornerstone.renderColorImage : cornerstone.renderGrayscaleImage;
+                }
+
+                render(el, el.invalid);
 
                 var context = el.canvas.getContext('2d');
 
@@ -49,6 +64,8 @@
                 };
 
                 $(el.element).trigger("CornerstoneImageRendered", eventData);
+                el.image.stats.lastRenderTime = diff;
+
                 el.invalid = false;
                 el.needsRedraw = false;
             }
