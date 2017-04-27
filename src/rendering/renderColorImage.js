@@ -90,17 +90,17 @@
         }
 
         // get the lut to use
-        var start = (window.performance ? performance.now() : Data.now());
+        var start = (window.performance ? performance.now() : Date.now());
         var colorLut = getLut(image, enabledElement.viewport);
-        image.stats.lastLutGenerateTime = (window.performance ? performance.now() : Data.now()) - start;
+        image.stats.lastLutGenerateTime = (window.performance ? performance.now() : Date.now()) - start;
 
         // the color image voi/invert has been modified - apply the lut to the underlying
         // pixel data and put it into the renderCanvas
         cornerstone.storedColorPixelDataToCanvasImageData(image, colorLut, colorRenderCanvasData.data);
 
-        start = (window.performance ? performance.now() : Data.now());
+        start = (window.performance ? performance.now() : Date.now());
         colorRenderCanvasContext.putImageData(colorRenderCanvasData, 0, 0);
-        image.stats.lastPutImageDataTime = (window.performance ? performance.now() : Data.now()) - start;
+        image.stats.lastPutImageDataTime = (window.performance ? performance.now() : Date.now()) - start;
         return colorRenderCanvas;
     }
 
