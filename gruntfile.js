@@ -6,7 +6,8 @@ module.exports = function(grunt) {
         clean: {
             default: {
                 src: [
-                    'dist'
+                    'dist',
+                    'build'
                 ]
             }
         },
@@ -21,9 +22,24 @@ module.exports = function(grunt) {
                 flatten: true
             }
         },
+        babel: {
+            options: {
+                sourceMap: false,
+                presets: ['es2015']
+            },
+            build: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/',
+                    src: ['**/*.js'],
+                    dest: 'build/'
+                }]
+            },
+        },
+
         concat: {
             build: {
-                src : ['src/header.js','src/**/*.js'],
+                src : ['build/header.js','build/**/*.js'],
                 dest: 'build/built.js'
             },
             css: {
@@ -85,7 +101,7 @@ module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
 
-    grunt.registerTask('buildAll', ['copy', 'concat', 'uglify', 'jshint', 'cssmin', 'qunit']);
+    grunt.registerTask('buildAll', ['copy', 'babel:build', 'concat', 'uglify', 'jshint', 'cssmin', 'qunit']);
     grunt.registerTask('default', ['clean', 'buildAll']);
 };
 

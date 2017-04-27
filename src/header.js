@@ -1,5 +1,5 @@
 if(typeof cornerstone === 'undefined'){
-    cornerstone = {
+    var cornerstone = {
         internal : {},
         rendering: {},
         colors: {}
