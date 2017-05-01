@@ -1031,7 +1031,7 @@ if(typeof cornerstone === 'undefined'){
       {
         modalityLutValue =  storedValue * slope + intercept;
         voiLutValue = (((modalityLutValue - (localWindowCenter)) / (localWindowWidth) + 0.5) * 255.0);
-        lut[storedValue + (-offset)] = voiLutValue;
+        lut[storedValue + (-offset)] = 255 - voiLutValue;
       }
     }
     else {
