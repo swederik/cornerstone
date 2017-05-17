@@ -25,16 +25,16 @@
         var pixelData = image.getPixelData();
         image.stats.lastGetPixelDataTime = (window.performance ? performance.now() : Date.now()) - start;
 
+        var numPixels = pixelData.length;
         var minPixelValue = image.minPixelValue;
         var canvasImageDataIndex = 3;
         var storedPixelDataIndex = 0;
-        var numPixels = pixelData.length;
 
-        start = (window.performance ? performance.now() : Date.now());
         // NOTE: As of Nov 2014, most javascript engines have lower performance when indexing negative indexes.
         // We have a special code path for this case that improves performance.  Thanks to @jpambrun for this enhancement
 
         // Added two paths (Int16Array, Uint16Array) to avoid polymorphic deoptimization in chrome.
+        start = (window.performance ? performance.now() : Date.now());
         if (pixelData instanceof Int16Array) {
             if(minPixelValue < 0){
                 while(storedPixelDataIndex < numPixels) {

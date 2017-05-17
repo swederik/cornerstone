@@ -13,7 +13,6 @@
         image.stats.lastGetPixelDataTime = (window.performance ? performance.now() : Date.now()) - start;
 
 
-        start = (window.performance ? performance.now() : Date.now());
         var minPixelValue = image.minPixelValue;
         var canvasImageDataIndex = 0;
         var storedPixelDataIndex = 0;
@@ -21,6 +20,7 @@
 
         // NOTE: As of Nov 2014, most javascript engines have lower performance when indexing negative indexes.
         // We have a special code path for this case that improves performance.  Thanks to @jpambrun for this enhancement
+        start = (window.performance ? performance.now() : Date.now());
         if(minPixelValue < 0){
             while(storedPixelDataIndex < numPixels) {
                 canvasImageDataData[canvasImageDataIndex++] = lut[pixelData[storedPixelDataIndex++] + (-minPixelValue)]; // red
