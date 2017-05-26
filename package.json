@@ -39,7 +39,7 @@
     "test:phantom": "karma start config/karma/karma-phantom.js",
     "test:chrome": "karma start config/karma/karma-chrome.js",
     "test:firefox": "karma start config/karma/karma-firefox.js",
-    "test:all": "npm run test:phantom && npm run test:chrome && npm run test:firefox",
+    "test:all": "npm run test:phantom && npm run test:chrome && npm run test:firefox"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
