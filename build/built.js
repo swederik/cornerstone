@@ -88,6 +88,7 @@ if(typeof cornerstone === 'undefined'){
         }
 
         var enabledElement = cornerstone.getEnabledElement(element);
+        var oldImage = enabledElement.image;
 
         enabledElement.image = image;
 
@@ -118,6 +119,7 @@ if(typeof cornerstone === 'undefined'){
             viewport : enabledElement.viewport,
             element : enabledElement.element,
             image : enabledElement.image,
+            oldImage: oldImage,
             enabledElement : enabledElement,
             frameRate : frameRate
         };
