@@ -26,10 +26,13 @@
         cornerstone.resize(element, true);
 
 
-        function draw() {
+        function draw(timestamp) {
             if (el.canvas === undefined){
                 return;
             }
+
+            $(el.element).trigger('CornerstonePreRender', { enabledElement: el, timestamp: timestamp });
+
             if (el.needsRedraw && el.image !== undefined){
                 var start = new Date();
                 
