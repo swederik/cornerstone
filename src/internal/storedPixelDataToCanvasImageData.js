@@ -65,7 +65,7 @@
                 }
             }
         }
-        image.stats.laststoredPixelDataToCanvasImageDataTime = (window.performance ? performance.now() : Date.now()) - start;
+        image.stats.lastStoredPixelDataToCanvasImageDataTime = (window.performance ? performance.now() : Date.now()) - start;
     }
 
     // Module exports
