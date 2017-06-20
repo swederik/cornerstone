@@ -228,7 +228,7 @@ if(typeof cornerstone === 'undefined'){
 
                 el.image.stats = {
                     lastGetPixelDataTime:-1.0,
-                    laststoredPixelDataToCanvasImageDataTime:-1.0,
+                    lastStoredPixelDataToCanvasImageDataTime:-1.0,
                     lastPutImageDataTime:-1.0,
                     lastRenderTime:-1.0,
                     lastLutGenerateTime:-1.0,
@@ -254,11 +254,12 @@ if(typeof cornerstone === 'undefined'){
                     renderTimeInMs: diff
                 };
 
-                $(el.element).trigger("CornerstoneImageRendered", eventData);
                 el.image.stats.lastRenderTime = diff;
 
                 el.invalid = false;
                 el.needsRedraw = false;
+
+                $(el.element).trigger("CornerstoneImageRendered", eventData);
             }
 
             cornerstone.requestAnimationFrame(draw);
