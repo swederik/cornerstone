@@ -92,6 +92,7 @@ function getRenderCanvas (enabledElement, image, invalidated) {
   let start = (window.performance ? performance.now() : Date.now());
   const colorLut = getLut(image, enabledElement.viewport);
 
+  image.stats = image.stats || {};
   image.stats.lastLutGenerateTime = (window.performance ? performance.now() : Date.now()) - start;
 
   const colorRenderCanvasData = enabledElement.renderingTools.colorRenderCanvasData;
@@ -148,10 +149,6 @@ export function renderColorImage (enabledElement, invalidated) {
   context.save();
   setToPixelCoordinateSystem(enabledElement, context);
 
-  if (!enabledElement.renderingTools) {
-    enabledElement.renderingTools = {};
-  }
-
   let renderCanvas;
 
   if (enabledElement.options && enabledElement.options.renderer &&
@@ -179,4 +176,41 @@ export function renderColorImage (enabledElement, invalidated) {
   lastRenderedViewport.hflip = enabledElement.viewport.hflip;
   lastRenderedViewport.vflip = enabledElement.viewport.vflip;
   enabledElement.renderingTools.lastRenderedViewport = lastRenderedViewport;
+}
+
+export function addColorLayer (layer, invalidated) {
+  if (layer === undefined) {
+    throw new Error('addColorLayer: layer parameter must not be undefined');
+  }
+
+  const image = layer.image;
+
+  if (image === undefined) {
+    throw new Error('addColorLayer: image must be loaded before it can be drawn');
+  }
+
+  layer.renderingTools = layer.renderingTools || {};
+  layer.canvas = getRenderCanvas(layer, image, invalidated);
+
+  const context = layer.canvas.getContext('2d');
+
+  if (layer.viewport.pixelReplication === true) {
+    context.imageSmoothingEnabled = false;
+    context.mozImageSmoothingEnabled = false;
+  } else {
+    context.imageSmoothingEnabled = true;
+    context.mozImageSmoothingEnabled = true;
+  }
+
+  const lastRenderedViewport = {
+    windowCenter: layer.viewport.voi.windowCenter,
+    windowWidth: layer.viewport.voi.windowWidth,
+    invert: layer.viewport.invert,
+    rotation: layer.viewport.rotation,
+    hflip: layer.viewport.hflip,
+    vflip: layer.viewport.vflip
+  };
+
+  layer.renderingTools.lastRenderedImageId = image.imageId;
+  layer.renderingTools.lastRenderedViewport = lastRenderedViewport;
 }

@@ -22,9 +22,14 @@ export default function (element, image, viewport) {
   }
 
   const enabledElement = getEnabledElement(element);
+  const activeLayer = cornerstone.getActiveLayer(element);
   const oldImage = enabledElement.image;
 
   enabledElement.image = image;
+
+  if (activeLayer) {
+    activeLayer.image = image;
+  }
 
   if (enabledElement.viewport === undefined) {
     enabledElement.viewport = getDefaultViewport(enabledElement.canvas, image);
