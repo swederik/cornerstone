@@ -1,5 +1,8 @@
 version: 2
 
+orbs:
+  coveralls: coveralls/coveralls@1.0.6
+
 defaults: &defaults
   working_directory: ~/repo
   docker:
@@ -37,7 +40,8 @@ jobs:
           command: npm install --save-dev codecov
       - run:
           name: Tests && Codecov Report
-          command: npm run test:ci
+          command: npm run test
+      - coveralls/upload
       - store_artifacts:
           path: ./coverage/
           prefix: tests
